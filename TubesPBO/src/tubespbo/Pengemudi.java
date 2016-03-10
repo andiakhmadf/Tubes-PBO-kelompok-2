@@ -7,9 +7,9 @@ package tubespbo;
 
 /**
  *
- * @author user
+ * @author Andi
  */
-public class Pengemudi {
+public class Pengemudi extends Orang {
     private Pesanan pesanan[];
     private String nama;
     private String kendaraan;
@@ -20,7 +20,7 @@ public class Pengemudi {
         this.nama = nama;
         this.kendaraan = kendaraan;
     }
-    public addPesanan(Pesanan p){
+    public void addPesanan(Pesanan p){
         pesanan[jumlahPesanan] = p;
         jumlahPesanan++;
     }
@@ -35,5 +35,15 @@ public class Pengemudi {
     }
     public String getAlamatkirim(){
        return alamatKirim;
-    }  
+    }
+    public Pesanan getPesanan(int i){
+        return pesanan[i];
+    }
+    @Override
+    public void kirimPesanan(){
+		for (int i=0; i<=jumlahPesanan; i++){	
+                    pesanan[i] = null;
+		}
+		jumlahPesanan = 0;
+    }
 }
