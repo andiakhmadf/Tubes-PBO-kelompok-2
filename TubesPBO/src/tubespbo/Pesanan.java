@@ -1,57 +1,63 @@
 package tubespbo;
+import java.util.*;
+public class Pesanan {
+    private ArrayList<String> barang = new ArrayList<String>();
+    private String tipePesanan;
+    private long harga;
+    private String alamatPemesan;
+    private String alamatTujuan;
 
-// author Hariz
+    public Pesanan(String tipePesanan) {
+        this.tipePesanan = tipePesanan;
+    }
+    
+    
+    public int getJumlahBarang() {
+        return barang.size();
+    }
 
-public class Pesanan
-{
-	private Kurir brg[] ;
-	private String tipePesanan ;
-	private long harga ;
-	private int jumlahBarang ;
-        private String nB;
-        private int jB;
-        private double bB;
+    public void setTipePesanan(String tipePesanan) {
+        this.tipePesanan = tipePesanan;
+    }
 
-	public Pesanan (int jumlahBarang,String tipePesanan)
-	{
-		brg = new Kurir[jumlahBarang] ;
-		this.tipePesanan = tipePesanan ;	
-	}
-	
-	public Pesanan (String tipePesanan)
-	{
-		this.tipePesanan = tipePesanan ;	
-	}
-	public int getJumlahBarang(){
-            return jumlahBarang;
-        }
-	public void setTipepesanan(String tipePesanan )
-	{
-		this.tipePesanan = tipePesanan ;
-	}
-	
-	public String getTipepesanan ()
-	{
-		return tipePesanan ;
-	}
-	
-	public void setHarga (long harga)
-	{
-		this.harga = harga ;
-	}
-	
-	public long getHarga ()
-	{
-		return harga ;
-	}
-	
-	public void addBarang(Kurir brg)
-	{
-          nB = brg.getNamaBrg();
-          jB = brg.getJumlahBrg();
-          bB = brg.getBeratBrg();
-          brg = new Kurir(nB,jB,bB);
-	  this.brg[jumlahBarang] = brg ;
-	  jumlahBarang++;
-	}
+    public String getTipePesanan() {
+        return tipePesanan;
+    }
+
+    public void addBarang(String barang) {
+        this.barang.add(barang);
+    }
+    
+    public void removeBarang(int i){
+        barang.remove(i);
+    }
+    
+    public String getBarang(int i) {
+        return barang.get(i);
+    }
+
+    public void setHarga(long harga) {
+        this.harga = harga;
+    }
+
+    public long getHarga() {
+        return harga;
+    }
+
+    public void setAlamatPemesan(String alamatPemesan) {
+        this.alamatPemesan = alamatPemesan;
+    }
+
+    public void setAlamatTujuan(String alamatTujuan) {
+        this.alamatTujuan = alamatTujuan;
+    }
+
+    public String getAlamatPemesan() {
+        return alamatPemesan;
+    }
+
+    public String getAlamatTujuan() {
+        return alamatTujuan;
+    }
+    
 }

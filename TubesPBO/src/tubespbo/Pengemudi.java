@@ -1,49 +1,47 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tubespbo;
 
-/**
- *
- * @author Andi
- */
+import java.util.*;
 public class Pengemudi extends Orang {
-    private Pesanan pesanan[];
+    private Pesanan pesanan;
     private String nama;
     private String kendaraan;
-    private String alamatKirim;
-    private int jumlahPesanan;
-    
-    public Pengemudi(String nama,String kendaraan){
+    private String alamatPemesan;
+
+    public Pengemudi(String nama, String kendaraan) {
         this.nama = nama;
         this.kendaraan = kendaraan;
     }
-    public void addPesanan(Pesanan p){
-        pesanan[jumlahPesanan] = p;
-        jumlahPesanan++;
+
+    public void addPesanan(Pesanan p) {
+        this.pesanan = p;
     }
-    public String getNama(){
+
+    public String getNama() {
         return nama;
     }
-    public String getKendaraan(){
+
+    public String getKendaraan() {
         return kendaraan;
     }
-    public void setAlamatkirim(String ak){
-        this.alamatKirim = ak;
+
+    public void setAlamatPemesan(String ak) {
+        this.alamatPemesan = ak;
     }
-    public String getAlamatkirim(){
-       return alamatKirim;
+
+    public String getAlamatPemesan() {
+        return alamatPemesan;
     }
-    public Pesanan getPesanan(int i){
-        return pesanan[i];
+
+    public Pesanan getPesanan() {
+        return pesanan;
     }
+
+    public void setHarga(long harga) {
+        pesanan.setHarga(harga);
+    }
+
     @Override
-    public void kirimPesanan(){
-		for (int i=0; i<=jumlahPesanan; i++){	
-                    pesanan[i] = null;
-		}
-		jumlahPesanan = 0;
+    public void kirimPesanan() {
+        pesanan = null;
     }
 }
