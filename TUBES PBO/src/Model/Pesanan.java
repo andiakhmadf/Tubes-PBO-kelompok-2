@@ -3,26 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tubes.pbo;
+package Model;
 
 /**
  *
  * @author AGUNG
  */
-public class Pesanan {
-    private String barang[];
+import java.io.Serializable;
+import java.util.*;
+public class Pesanan implements Serializable{
+    private List<String> barang = new ArrayList<String>();
     private String tipePesanan;
     private long harga;
-    private int jumlahBarang;
     private String alamatPemesan;
     private String alamatTujuan;
+    private String status;
 
     public Pesanan(String tipePesanan) {
         this.tipePesanan = tipePesanan;
     }
-
+    
+    
     public int getJumlahBarang() {
-        return jumlahBarang;
+        return barang.size();
     }
 
     public void setTipePesanan(String tipePesanan) {
@@ -34,12 +37,15 @@ public class Pesanan {
     }
 
     public void addBarang(String barang) {
-        this.barang[jumlahBarang] = barang;
-        jumlahBarang++;
+        this.barang.add(barang);
     }
-
+    
+    public void removeBarang(int i){
+        barang.remove(i);
+    }
+    
     public String getBarang(int i) {
-        return barang[i];
+        return barang.get(i);
     }
 
     public void setHarga(long harga) {
@@ -65,4 +71,12 @@ public class Pesanan {
     public String getAlamatTujuan() {
         return alamatTujuan;
     }
+    
+    public String[] getListBarang(){
+        return (String[]) barang.toArray(new String[0]);
+    }
+    
+    
+    
+    
 }
