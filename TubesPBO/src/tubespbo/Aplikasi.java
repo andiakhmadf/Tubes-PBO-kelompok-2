@@ -67,6 +67,7 @@ public class Aplikasi {
                     System.out.print("Password: ");
                     u = user.nextLine();
                     MenuPelanggan();
+                    break;
                     }
         }
     
