@@ -3,27 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tubes.pbo;
+package Model;
 
 /**
  *
  * @author AGUNG
  */
-public class Pengemudi extends Orang {
-    private Pesanan pesanan[];
+import java.io.Serializable;
+import java.util.*;
+public class Pengemudi extends Orang implements Serializable{
+    private Pelanggan pesanan;
     private String nama;
     private String kendaraan;
     private String alamatPemesan;
-    private int jumlahPesanan;
 
     public Pengemudi(String nama, String kendaraan) {
         this.nama = nama;
         this.kendaraan = kendaraan;
     }
 
-    public void addPesanan(Pesanan p) {
-        pesanan[jumlahPesanan] = p;
-        jumlahPesanan++;
+    public void addPesanan(Pelanggan p) {
+        this.pesanan = p;
     }
 
     public String getNama() {
@@ -42,19 +42,16 @@ public class Pengemudi extends Orang {
         return alamatPemesan;
     }
 
-    public Pesanan getPesanan(int i) {
-        return pesanan[i];
+    public Pelanggan getPesanan() {
+        return pesanan;
     }
 
-    public void setHarga(int i, long harga) {
-        pesanan[i].setHarga(harga);
+    public void setHarga(long harga) {
+        pesanan.getPesanan().setHarga(harga);
     }
 
     @Override
     public void kirimPesanan() {
-        for (int i = 0; i <= jumlahPesanan; i++) {
-            pesanan[i] = null;
-        }
-        jumlahPesanan = 0;
+        pesanan = null;
     }
 }
