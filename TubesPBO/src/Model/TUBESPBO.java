@@ -18,9 +18,9 @@ public class TUBESPBO {
         
         
         Controller c = new Controller();      //GUI Application
-      
+
         
         //Aplikasi app = new Aplikasi();          //Console Application
-       // app.MainMenu();                         
+        //app.MainMenu();                         
     }
 }

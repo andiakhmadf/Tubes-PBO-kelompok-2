@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import View.*;
@@ -31,6 +26,9 @@ public class Controller implements ActionListener{
     private ViewBarang vwListBarang;
     private StatusPesanan vwStatusPesanan;
     private DetailPesanan vwDetailPesanan;
+    private MenuLogin vwMenuLogin;
+    private PengemudiMenuUtama vwPengemudiMenuUtama;
+    private LoginPengemudi vwLoginPengemudi;
     private Database database;
     private ArrayList<Pelanggan> listPesan;
     private ArrayList<Pelanggan> listUserPelanggan;
@@ -38,8 +36,10 @@ public class Controller implements ActionListener{
     private Pelanggan pelanggan;
     private Pengemudi pengemudi;
     
-    String username;
-    String password;
+    private int uC;   //Indeks Pelanggan yang sedang login
+    private int uR;   //Indeks Pengemudi yang sedang login
+    private String username;
+    private String password = "tubes";
     
     public Controller() throws IOException, ClassNotFoundException{
         app = new Aplikasi();
@@ -56,6 +56,9 @@ public class Controller implements ActionListener{
         vwListBarang = new ViewBarang();
         vwStatusPesanan = new StatusPesanan();
         vwDetailPesanan = new DetailPesanan();
+        vwMenuLogin = new MenuLogin();
+        vwPengemudiMenuUtama = new PengemudiMenuUtama();
+        vwLoginPengemudi = new LoginPengemudi();
         
         vwLoginPelanggan.addListener(this);
         vwMenuPelanggan.addListener(this);
@@ -65,34 +68,55 @@ public class Controller implements ActionListener{
         vwListBarang.addListener(this);
         vwStatusPesanan.addListener(this);
         vwDetailPesanan.addListener(this);
+        vwMenuLogin.addListener(this);
+        vwPengemudiMenuUtama.addListener(this);
+        vwLoginPengemudi.addListener(this);
         
         listUserPelanggan = database.readAkunPelanggan();
         listUserPengemudi = database.readAkunPengemudi();
         listPesan = database.readDaftarPesanan();
         
-        vwLoginPelanggan.setVisible(true);
+        vwMenuLogin.setVisible(true);
     }
     
-    
-    
-    public int cekAkun(Pesanan p){
+    public int cekAkun(String username){
         int x = 0;
-        for(int i=0; i<=listPesan.size(); i++){
-            if (listPesan.get(i).getPesanan().equals(p)){
-                x = 1;
+        for(int i=0; i<listUserPelanggan.size(); i++){
+            if (listUserPelanggan.get(i).getNama().equals(username)){
+                x = i;
             }
         } return x;
     }
     
-    public int cekPesananOnPengemudi(Pesanan p){
+    public int cekPesananOnListPesanan(String username){
         int x = 0;
-        for(int i=0; i<=listUserPengemudi.size(); i++){
-            if (listUserPengemudi.get(i).getPesanan().getPesanan().equals(p)){
-                x = 1;
+        for(int i=0; i<listPesan.size(); i++){
+            if (listPesan.get(i).getNama().equals(username)){
+                x = i;
             }
         } return x;
     }
     
+    public int cekPesananOnPengemudi(String username){
+        int x = 0;
+        for(int i=0; i<listUserPengemudi.size(); i++){
+            if (listUserPengemudi.get(i).getPesanan().getNama().equals(username)){
+                x = i;
+            }
+        } return x;
+    }
+    
+    public int pesananToIndex(Pelanggan p){
+        int x = 0;
+        if (p.getPesanan() != null) {
+            for (int i = 0; i < listPesan.size(); i++) {
+                if (listPesan.get(i).getNama().equals(p.getNama())) {
+                    x = i;
+                }
+            }
+        }
+         return x;
+    }
     
     public void actionPerformed(ActionEvent ae){
         Object source = ae.getSource();
@@ -102,14 +126,23 @@ public class Controller implements ActionListener{
  //============================CONTROLLER PELANGGAN=======================        
   //====================================================================== 
             
-            
-            if (source.equals(vwLoginPelanggan.getBtnLogin())) {                
+            if (source.equals(vwMenuLogin.getBtnPelanggan())){
+                vwLoginPelanggan.setVisible(true);
+                vwMenuLogin.setVisible(false);
+            }
+            else if (source.equals(vwMenuLogin.getBtnPengemudi())){
+                vwLoginPengemudi.setVisible(true);
+                vwMenuLogin.setVisible(false);
+            }
+            else if (source.equals(vwLoginPelanggan.getBtnLogin())) {                
                 //if(a.equals(a1)){
-                                                           //Frame Login Pelanggan
+                                                                                //Frame Login Pelanggan
                         vwLoginPelanggan.setVisible(false);             
                         vwMenuPelanggan.setVisible(true);
-                        pelanggan = listUserPelanggan.get(4);
-                        vwMenuPelanggan.setTfNama(pelanggan.getNama());
+                        uC = 7;
+                        uR = 2;
+                        listUserPelanggan.get(uC);
+                        vwMenuPelanggan.setTfNama(listUserPelanggan.get(uC).getNama());
                     
                 //if(a == b){
                 //vwLoginPelanggan.setVisible(false);
@@ -122,17 +155,17 @@ public class Controller implements ActionListener{
             else if (source.equals(vwMenuPelanggan.getBtnEdit())) {
                 vwMenuPelanggan.setVisible(false);
                 vwEditProfil.setVisible(true);
-                vwEditProfil.setTfNama(pelanggan.getNama());
-                vwEditProfil.setTfAlamat(pelanggan.getAlamat());
+                vwEditProfil.setTfNama(listUserPelanggan.get(uC).getNama());
+                vwEditProfil.setTfAlamat(listUserPelanggan.get(uC).getAlamat());
             } else if (source.equals(vwEditProfil.getBtnBack())) {              //Frame Edit Profil Pelanggan
                     vwEditProfil.setVisible(false);
                     vwMenuPelanggan.setVisible(true);
             } else if (source.equals(vwEditProfil.getBtnSave())) {
                     vwEditProfil.setVisible(false);
                     vwMenuPelanggan.setVisible(true);
-                    app.editProfil(pelanggan, vwEditProfil.getTfNama(), 
+                    app.editProfil(listUserPelanggan.get(uC), vwEditProfil.getTfNama(), 
                             vwEditProfil.getTfAlamat());
-                    vwMenuPelanggan.setTfNama(pelanggan.getNama());
+                    vwMenuPelanggan.setTfNama(listUserPelanggan.get(uC).getNama());
             } 
             
             //====================================================================== 
@@ -146,10 +179,10 @@ public class Controller implements ActionListener{
                    
                     vwMenuPelanggan.setVisible(true);
                     vwPesanOjek.setVisible(false);
-                    app.pilihPesan(pelanggan,"Ojek");
-                    app.isiPesan(pelanggan,vwPesanOjek.getTfLokasi(),
+                    app.pilihPesan(listUserPelanggan.get(uC),"Ojek");
+                    app.isiPesan(listUserPelanggan.get(uC),vwPesanOjek.getTfLokasi(),
                             vwPesanOjek.getTfTujuan());
-                    app.kirimPesan(pelanggan);
+                    app.kirimPesan(listUserPelanggan.get(uC));
                     
                    JOptionPane.showMessageDialog(vwPesanOjek, "Pesan Terkirim");
             } else if (source.equals(vwPesanOjek.getBtnBack())){
@@ -165,29 +198,29 @@ public class Controller implements ActionListener{
                 vwPesanKurir.setTfLokasi("");
                 vwPesanKurir.setTfTujuan("");
                 vwPesanKurir.setTfNamaBarang("");
-                app.pilihPesan(pelanggan,"Kurir");
-                vwListBarang.setListItem(pelanggan.getPesanan().getListBarang());
+                app.pilihPesan(listUserPelanggan.get(uC),"Kurir");
+                vwListBarang.setListItem(listUserPelanggan.get(uC).getPesanan().getListBarang());
                 
             } else if (source.equals(vwPesanKurir.getBtnSend())){
                     vwMenuPelanggan.setVisible(true);                           //Frame Pesan Kurir Pelanggan
                     vwPesanKurir.setVisible(false);
-                    app.isiPesan(pelanggan,vwPesanKurir.getTfLokasi(),
+                    app.isiPesan(listUserPelanggan.get(uC),vwPesanKurir.getTfLokasi(),
                             vwPesanKurir.getTfTujuan());
-                    app.kirimPesan(pelanggan);
+                    app.kirimPesan(listUserPelanggan.get(uC));
                     JOptionPane.showMessageDialog(vwPesanOjek, "Pesan Terkirim");
                     
             } else if (source.equals(vwPesanKurir.getBtnBack())){
                     vwMenuPelanggan.setVisible(true);
                     vwPesanKurir.setVisible(false);
-                    pelanggan.removePesanan();
+                    listUserPelanggan.get(uC).removePesanan();
                     
             } else if (source.equals(vwPesanKurir.getBtnAdd())){
                     String a = vwPesanKurir.getTfNamaBarang();
                     if (a!=""){
-                        app.tambahBarang(pelanggan.getPesanan(), a);
+                        app.tambahBarang(listUserPelanggan.get(uC).getPesanan(), a);
                     }
-                    if (pelanggan.getPesanan().getJumlahBarang() != 0){  
-                        vwListBarang.setListItem(pelanggan.getPesanan().getListBarang());
+                    if (listUserPelanggan.get(uC).getPesanan().getJumlahBarang() != 0){  
+                        vwListBarang.setListItem(listUserPelanggan.get(uC).getPesanan().getListBarang());
                     }
                     vwPesanKurir.setTfNamaBarang("");
             //====================================================================== 
@@ -198,10 +231,10 @@ public class Controller implements ActionListener{
             } else if (source.equals(vwListBarang.getBtnAdd())){
                         String b = vwListBarang.getTfNamaBarang();
                         if (b!=""){
-                            app.tambahBarang(pelanggan.getPesanan(), b);
+                            app.tambahBarang(listUserPelanggan.get(uC).getPesanan(), b);
                         }
-                        if (pelanggan.getPesanan().getJumlahBarang() != 0){  
-                            vwListBarang.setListItem(pelanggan.getPesanan().getListBarang());
+                        if (listUserPelanggan.get(uC).getPesanan().getJumlahBarang() != 0){  
+                            vwListBarang.setListItem(listUserPelanggan.get(uC).getPesanan().getListBarang());
                         }
                         vwListBarang.setTfNamaBarang("");
             } else if (source.equals(vwListBarang.getBtnBack())){
@@ -210,8 +243,8 @@ public class Controller implements ActionListener{
                         vwListBarang.setTfNamaBarang("");
             } else if (source.equals(vwListBarang.getBtnRemove())){
                         int selected = vwListBarang.getSelectedBarang();
-                        app.removeBarang(pelanggan.getPesanan(), selected+1);
-                        vwListBarang.setListItem(pelanggan.getPesanan().getListBarang());
+                        app.removeBarang(listUserPelanggan.get(uC).getPesanan(), selected+1);
+                        vwListBarang.setListItem(listUserPelanggan.get(uC).getPesanan().getListBarang());
             }
             
            //====================================================================== 
@@ -219,23 +252,45 @@ public class Controller implements ActionListener{
             else if (source.equals(vwMenuPelanggan.getBtnStatus())){
                         vwMenuPelanggan.setVisible(false);
                         vwStatusPesanan.setVisible(true);                                   //Frame Status Pesanan
-                        /*try{
-                            if (cekPesananOnPengemudi(pelanggan.getPesanan())==1){
-                                vwStatusPesanan.setTfStatus(pelanggan.getPesanan().
-                                        getStatus(3));
-                            } else if (cekAkun(pelanggan.getPesanan())==1){
-                                vwStatusPesanan.setTfStatus(pelanggan.getPesanan().
-                                        getStatus(2));
-                            } else {
-                                vwStatusPesanan.setTfStatus(pelanggan.getPesanan().
-                                        getStatus(1));
+                        vwStatusPesanan.setTfStatus("");
+                        vwStatusPesanan.setTfKendaraan("");
+                        vwStatusPesanan.setTfPenerima("");
+                        
+                            if (listUserPelanggan.get(uC).getPesanan()==null){
+                                vwStatusPesanan.setTfStatus("Belum memesan");
+                            } else if (cekPesananOnListPesanan(listUserPelanggan.get(uC).getNama())!=0){
+                                vwStatusPesanan.setTfStatus("Menunggu Diterima");
+                            } else if (cekPesananOnPengemudi(listUserPelanggan.get(uC).getNama())!=0){
+                                int z = cekPesananOnPengemudi(listUserPelanggan.get(uC).getNama());
+                                vwStatusPesanan.setTfStatus("Pesanan Diterima");
+                                vwStatusPesanan.setTfPenerima(listUserPengemudi.get(z).
+                                        getNama());
+                                vwStatusPesanan.setTfKendaraan(listUserPengemudi.get(z).
+                                        getKendaraan());
                             }
-                        }catch(Exception e){
-                            JOptionPane.showMessageDialog(vwStatusPesanan, "Status Pesanan Tidak Terdefinisi");
-                        }*/
+                        
             } else if (source.equals(vwStatusPesanan.getBtnView())){
                             vwStatusPesanan.setVisible(false);
                             vwDetailPesanan.setVisible(true);
+                            if(listUserPelanggan.get(uC).getPesanan()==null){
+                                JOptionPane.showMessageDialog(vwDetailPesanan, "Belum ada Pesanan");
+                            } else {
+                                vwDetailPesanan.setTfCostumer(listUserPelanggan.get(uC).getNama());
+                                vwDetailPesanan.setTfLokasi(listUserPelanggan.
+                                        get(uC).getPesanan().getAlamatPemesan());
+                                vwDetailPesanan.setTfTujuan(listUserPelanggan.
+                                        get(uC).getPesanan().getAlamatTujuan());
+                                vwDetailPesanan.setTfTipe(listUserPelanggan.
+                                        get(uC).getPesanan().getTipePesanan());
+                                if(listUserPelanggan.get(uC).getPesanan().
+                                        getTipePesanan().equals("Kurir")){
+                                    
+                                    int c = pesananToIndex(listUserPelanggan.get(uC));
+                                    System.out.println(c);
+                                    vwDetailPesanan.setListBarang(listPesan.get(c)
+                                            .getPesanan().getListBarang());
+                                }
+                            }
                             
                             
             } else if (source.equals(vwStatusPesanan.getBtnBack())){
@@ -252,7 +307,7 @@ public class Controller implements ActionListener{
             
             else if (source.equals(vwMenuPelanggan.getBtnLogout())){
                 vwMenuPelanggan.setVisible(false);
-                vwLoginPelanggan.setVisible(true);
+                vwMenuLogin.setVisible(true);
             }
             
             
@@ -263,7 +318,14 @@ public class Controller implements ActionListener{
         //========================CONTROLLER PENGEMUDI==========================        
         //======================================================================
             
-           
+            else if (source.equals(vwLoginPengemudi.getBtnLoginPengemudi())){
+                vwPengemudiMenuUtama.setVisible(true);
+                vwMenuLogin.setVisible(false);
+            }
+            else if (source.equals(vwPengemudiMenuUtama.getBtnLogoutPengemudi())){
+                vwPengemudiMenuUtama.setVisible(false);
+                vwMenuLogin.setVisible(true);
+            }
             
             
             

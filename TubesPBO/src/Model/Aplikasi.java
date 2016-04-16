@@ -145,7 +145,7 @@ public class Aplikasi {
 
     public void MenuPesanOjek() {
         int i = 9;
-        while (i != 5 || 1 != 0) {
+        while (i != 0){
             System.out.println("");
             System.out.println("==================================");
             System.out.println("===========PESAN OJEK=============");
@@ -167,6 +167,7 @@ public class Aplikasi {
                     System.out.println("");
                     kirimPesan(pelanggan);
                     System.out.println("==========Pesan terkirim==========");
+                    i=0;
                     break;
             }
         }
@@ -174,7 +175,8 @@ public class Aplikasi {
 
     public void MenuPesanKurir() {
         int i = 9;
-        while (i != 5 || i != 0) {
+        loop:
+        while (i != 0) {
             System.out.println("");
             System.out.println("==================================");
             System.out.println("==========PESAN KURIR=============");
@@ -217,6 +219,7 @@ public class Aplikasi {
                     System.out.println("");
                     kirimPesan(pelanggan);
                     System.out.println("==========Pesan terkirim==========");
+                    i=0;
                     break;
             }
         }

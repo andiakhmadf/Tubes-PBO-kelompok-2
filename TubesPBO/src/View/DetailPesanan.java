@@ -44,7 +44,7 @@ public class DetailPesanan extends javax.swing.JFrame {
         tfTipe = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        listBarang = new javax.swing.JList();
         btnBack = new javax.swing.JButton();
 
         jLabel5.setText("jLabel5");
@@ -74,12 +74,12 @@ public class DetailPesanan extends javax.swing.JFrame {
 
         jLabel7.setText("Item List");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        listBarang.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(listBarang);
 
         btnBack.setText("Back");
 
@@ -181,6 +181,10 @@ public class DetailPesanan extends javax.swing.JFrame {
         btnBack.addActionListener(e);
     }
     
+    public void setListBarang(String[] list){
+        listBarang.setListData(list);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -196,9 +200,9 @@ public class DetailPesanan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList listBarang;
     private javax.swing.JTextField tfCostumer;
     private javax.swing.JTextField tfLokasi;
     private javax.swing.JTextField tfTipe;
