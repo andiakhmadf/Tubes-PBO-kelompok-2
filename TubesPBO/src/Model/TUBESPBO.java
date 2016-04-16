@@ -17,10 +17,10 @@ public class TUBESPBO {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         
         
-        Controller c = new Controller();      //GUI Application
+        //Controller c = new Controller();      //GUI Application
 
         
-        //Aplikasi app = new Aplikasi();          //Console Application
-        //app.MainMenu();                         
+        Aplikasi app = new Aplikasi();          //Console Application
+        app.MainMenu();                         
     }
 }
