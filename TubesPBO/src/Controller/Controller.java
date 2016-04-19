@@ -42,7 +42,6 @@ public class Controller implements ActionListener{
     private Pengemudi pengemudi;
     private int onLogin; // 0 = Pelanggan, 1 = Pengemudi
     
-    
     private int uC;   //Indeks Pelanggan yang sedang login
     private int uR;   //Indeks Pengemudi yang sedang login
     private String username;
