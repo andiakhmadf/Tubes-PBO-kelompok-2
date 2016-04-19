@@ -76,24 +76,7 @@ public class Pesanan implements Serializable{
         return (String[]) barang.toArray(new String[0]);
     }
     
-    public void setStatus(int i){
-        switch(i){
-            case 1 : this.status = "Belum memesan";break;
-            case 2 : this.status = "Menunggu Diterima";break;
-            case 3 : this.status = "Pesanan Diterima";break;
-        }
-    }
     
-    public String getStatus(int i){
-        if (i == 1){
-            return "Belum memesan";
-        }else if(i==2){
-            return "Belum memesan";
-        }else if(i==3){
-            return "Pesanan Diterima";
-        }else{
-            return "";
-        }
-    }
+    
     
 }

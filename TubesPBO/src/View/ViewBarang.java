@@ -170,9 +170,7 @@ public class ViewBarang extends javax.swing.JFrame {
             throw new IllegalStateException("Please select any item");
         }
         return listItem.getSelectedIndex();
-    }
-    
-    
+    }    
 
     public void addListener(ActionListener e){
         btnAdd.addActionListener(e);

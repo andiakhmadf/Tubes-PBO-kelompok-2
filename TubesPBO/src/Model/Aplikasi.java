@@ -13,7 +13,9 @@ import java.io.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import static javax.management.Query.or;
 
 public class Aplikasi {
     
@@ -24,6 +26,7 @@ public class Aplikasi {
     private ArrayList<Pelanggan> listUserPelanggan;
     private ArrayList<Pengemudi> listUserPengemudi;
     private Kurir kurir;
+    private List<String> listPesananGui;
     
     
     Scanner user = new Scanner(System.in); //Scanner String
@@ -35,11 +38,28 @@ public class Aplikasi {
         listPesan = database.readDaftarPesanan();
         listUserPelanggan = database.readAkunPelanggan();
         listUserPengemudi = database.readAkunPengemudi();
+        listPesananGui = new ArrayList<String>();
     }
 
     public void editProfil(Pelanggan p, String nama, String alamat) {
         p.setNama(nama);
         p.setAlamat(alamat);
+    }  
+
+    public ArrayList<Pelanggan> getListUserPelanggan() {
+        return listUserPelanggan;
+    }
+
+    public ArrayList<Pengemudi> getListUserPengemudi() {
+        return listUserPengemudi;
+    }
+
+    public List<String> getListPesananGui() {
+        return listPesananGui;
+    }
+
+    public ArrayList<Pelanggan> getListPesan() {
+        return listPesan;
     }
 
     public void pilihPesan(Pelanggan p, String tipePesanan) {
@@ -79,6 +99,17 @@ public class Aplikasi {
                     i.getPesanan().getTipePesanan());
             x++;
         }
+    }
+    
+    public String[] lihatDaftarPesanGui() {
+        int x = 1;
+        listPesananGui.clear();
+        for (Pelanggan i : listPesan) {
+            listPesananGui.add(x + ". " + i.getNama() + "/ " + "Pesanan " + 
+                    i.getPesanan().getTipePesanan());
+            x++;
+        }
+        return (String[]) listPesananGui.toArray(new String[0]);
     }
 
     public void viewDetailPesanan(int g) {
@@ -145,7 +176,7 @@ public class Aplikasi {
 
     public void MenuPesanOjek() {
         int i = 9;
-        while (i != 0){
+        while (i != 0) {
             System.out.println("");
             System.out.println("==================================");
             System.out.println("===========PESAN OJEK=============");
@@ -167,7 +198,7 @@ public class Aplikasi {
                     System.out.println("");
                     kirimPesan(pelanggan);
                     System.out.println("==========Pesan terkirim==========");
-                    i=0;
+                    i = 0;
                     break;
             }
         }
@@ -175,7 +206,6 @@ public class Aplikasi {
 
     public void MenuPesanKurir() {
         int i = 9;
-        loop:
         while (i != 0) {
             System.out.println("");
             System.out.println("==================================");
@@ -219,7 +249,7 @@ public class Aplikasi {
                     System.out.println("");
                     kirimPesan(pelanggan);
                     System.out.println("==========Pesan terkirim==========");
-                    i=0;
+                    i = 0;
                     break;
             }
         }
@@ -318,5 +348,9 @@ public class Aplikasi {
 
     public void MainMenu() throws IOException {
         MainMenuLogin();
+    }
+
+    private void OR(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

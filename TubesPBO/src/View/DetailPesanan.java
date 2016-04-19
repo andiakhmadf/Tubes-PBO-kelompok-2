@@ -172,6 +172,10 @@ public class DetailPesanan extends javax.swing.JFrame {
     public void setTfTujuan(String tujuan) {
         tfTujuan.setText(tujuan);
     }
+    
+    public void setListBarang(String[] list){
+        listBarang.setListData(list);
+    }
 
     public JButton getBtnBack() {
         return btnBack;
@@ -179,10 +183,6 @@ public class DetailPesanan extends javax.swing.JFrame {
 
     public void addListener(ActionListener e){
         btnBack.addActionListener(e);
-    }
-    
-    public void setListBarang(String[] list){
-        listBarang.setListData(list);
     }
     
     /**

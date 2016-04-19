@@ -7,6 +7,7 @@ package View;
 
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JList;
 
 /**
  *
@@ -38,9 +39,9 @@ public class PengemudiMenuUtama extends javax.swing.JFrame {
         btnLogoutPengemudi = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        listPesanan = new javax.swing.JList();
+        btnGet = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
         tfDriverNama = new javax.swing.JTextField();
 
         jLabel2.setText("jLabel2");
@@ -65,20 +66,19 @@ public class PengemudiMenuUtama extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("OCR-B 10 BT", 0, 14)); // NOI18N
         jLabel3.setText("LIST PESANAN");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        listPesanan.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(listPesanan);
 
-        jButton2.setText("Get Order");
+        btnGet.setText("Get Order");
 
-        jButton3.setText("View Order");
+        btnView.setText("View Order");
 
         tfDriverNama.setEditable(false);
         tfDriverNama.setBackground(new java.awt.Color(226, 226, 226));
-        tfDriverNama.setText("Hariz Mulya Wibawa");
         tfDriverNama.setBorder(null);
         tfDriverNama.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,24 +98,24 @@ public class PengemudiMenuUtama extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tfDriverNama, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLogoutPengemudi)
-                        .addGap(35, 35, 35))
+                        .addComponent(btnLogoutPengemudi, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(182, 182, 182))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addComponent(jButton3)
+                        .addComponent(btnView)
                         .addGap(43, 43, 43)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGet, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(tfNamaPengemudi)
                 .addGap(93, 93, 93))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(100, 100, 100)
-                        .addComponent(jLabel3)))
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -133,8 +133,8 @@ public class PengemudiMenuUtama extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
+                    .addComponent(btnView)
+                    .addComponent(btnGet))
                 .addGap(129, 129, 129))
         );
 
@@ -163,29 +163,54 @@ public class PengemudiMenuUtama extends javax.swing.JFrame {
     }//GEN-LAST:event_tfDriverNamaActionPerformed
     
     public void setTfDriverNama(String nama) {
-        tfNama.setText(nama);
+        tfDriverNama.setText(nama);
     }
     
     public JButton getBtnLogoutPengemudi() {
         return btnLogoutPengemudi;
     }
+
+    public JButton getBtnGet() {
+        return btnGet;
+    }
+
+    public JButton getBtnView() {
+        return btnView;
+    }
+    
+    public JList getListPesanan() {
+        return listPesanan;
+    }
+    
+    public void setListPesanan(String[] pesanan) {
+        listPesanan.setListData(pesanan);
+    }
+    
+    public int getSelectedPesanan(){
+        if (listPesanan.getSelectedIndex() == -1){
+            throw new IllegalStateException("Please select any item");
+        }
+        return listPesanan.getSelectedIndex();
+    }
     
     public void addListener(ActionListener e){
         btnLogoutPengemudi.addActionListener(e);
+        btnView.addActionListener(e);
+        btnGet.addActionListener(e);
         tfDriverNama.addActionListener(e);
     }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGet;
     private javax.swing.JButton btnLogoutPengemudi;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnView;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList listPesanan;
     private javax.swing.JTextField tfDriverNama;
     private javax.swing.JTextField tfNama;
     private javax.swing.JTextField tfNamaPengemudi;
