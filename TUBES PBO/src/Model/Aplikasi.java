@@ -13,6 +13,7 @@ import java.io.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 import static javax.management.Query.or;
 
@@ -25,6 +26,7 @@ public class Aplikasi {
     private ArrayList<Pelanggan> listUserPelanggan;
     private ArrayList<Pengemudi> listUserPengemudi;
     private Kurir kurir;
+    private List<String> listPesananGui;
     
     
     Scanner user = new Scanner(System.in); //Scanner String
@@ -36,11 +38,28 @@ public class Aplikasi {
         listPesan = database.readDaftarPesanan();
         listUserPelanggan = database.readAkunPelanggan();
         listUserPengemudi = database.readAkunPengemudi();
+        listPesananGui = new ArrayList<String>();
     }
 
     public void editProfil(Pelanggan p, String nama, String alamat) {
         p.setNama(nama);
         p.setAlamat(alamat);
+    }  
+
+    public ArrayList<Pelanggan> getListUserPelanggan() {
+        return listUserPelanggan;
+    }
+
+    public ArrayList<Pengemudi> getListUserPengemudi() {
+        return listUserPengemudi;
+    }
+
+    public List<String> getListPesananGui() {
+        return listPesananGui;
+    }
+
+    public ArrayList<Pelanggan> getListPesan() {
+        return listPesan;
     }
 
     public void pilihPesan(Pelanggan p, String tipePesanan) {
@@ -80,6 +99,17 @@ public class Aplikasi {
                     i.getPesanan().getTipePesanan());
             x++;
         }
+    }
+    
+    public String[] lihatDaftarPesanGui() {
+        int x = 1;
+        listPesananGui.clear();
+        for (Pelanggan i : listPesan) {
+            listPesananGui.add(x + ". " + i.getNama() + "/ " + "Pesanan " + 
+                    i.getPesanan().getTipePesanan());
+            x++;
+        }
+        return (String[]) listPesananGui.toArray(new String[0]);
     }
 
     public void viewDetailPesanan(int g) {
